@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+
+
+<!--start add recipe form-->
+<div class="row">
+    <div class="col-md-6" style="margin: 0 auto;">
+        <form th:action="@{/admin/addType}" th:object="${recipeType}" method="post">
+            <input type="hidden" name="id" th:value="${id}">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="recipeType" class="col-form-label">Recipe Type</label>
+                    <input type="text" th:field="*{recipeType}" class="form-control" id="recipeType" placeholder="Recipe Type" required pattern="^(?!\s*$).+" title="The field cannot contain only spaces">
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 mt-5">
+                    <input type="submit" class="btn green-button"  value="Add To Bar">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end add recipe form-->
+
+<div th:replace="fragments/endPage.html :: endPage"></div>

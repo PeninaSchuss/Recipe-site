@@ -1,0 +1,30 @@
+<div th:fragment="recipesList">
+    <div class="container">
+        <h1 th:text="${type}"></h1>
+        <div class="form-container">
+            <ul>
+                <li th:each="recipe, stat : ${recipeNames}" class="recipe-item">
+                    <div>
+                        <div class="row">
+                            <div class="col">
+                                <form th:action="@{/seeRecipe}" method="post">
+                                    <div style="display: flex; align-items: center;">
+                                        <h4 class="recipe-title" th:text="${recipe.recipeName}"></h4>
+                                        <input type="hidden" name="id" th:value="${recipe.id}">
+                                        <button type="submit" class="btn green-button">Show Recipe</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <form th:action="@{/admin/DeleteRecipe}" method="post">
+                                    <input type="hidden" name="id" th:value="${recipe.id}">
+                                    <button type="submit" class="btn green-button">Delete Recipe</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

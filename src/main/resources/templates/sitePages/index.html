@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+<div th:if="${message}" class="alert alert-success" role="alert">
+    <p th:text="${message}"></p>
+</div>
+<!-- ##### Hero Area Start ##### -->
+<section class="hero-area">
+    <div class="recipe-container">
+
+        <!-- Single Hero Slide -->
+        <div class="hero-slides owl-carousel">
+            <div th:each="recipe : ${recipes}" class="recipe-frame">
+                <div class="recipe-slides">
+                    <form th:action="@{/seeRecipe}" method="post">
+                        <h2 th:text="${recipe.recipeName}" class="recipe-caption"></h2>
+                        <div class="btn-container">
+                            <input type="hidden" name="id" th:value="${recipe.id}">
+                            <button type="submit" class="btn green-button">Show Recipe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/scriptsForHtml/randomImg.js}"></script>
+</section>
+<!-- ##### Hero Area End ##### -->
+
+<div th:replace="fragments/endPage.html :: endPage"></div>

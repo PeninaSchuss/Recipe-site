@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+
+
+<!--start add recipe form-->
+<div class="row">
+    <div class="col-md-6" style="margin: 0 auto;">
+        <form th:action="@{/admin/add-recipe-to-db}" th:object="${recipe}" method="post">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="recipeName" class="col-form-label">Recipe Name</label>
+                    <input type="text" th:field="*{recipeName}" class="form-control" id="recipeName" placeholder="Recipe Name">
+                    <span th:if="${#fields.hasErrors('recipeName')}" th:errors="*{recipeName}" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6" id="recipeType">
+                    <label for="recipeType" class="col-form-label">Recipe Type</label>
+                    <select class="form-control" id="recipeTypeSelect" name="recipeTypeSelect" th:field="*{recipeType}">
+                        <option value=""></option>
+                        <option th:each="category : ${recipeCategory}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('recipeType')}" th:errors="*{recipeType}" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="prepTime" class="col-form-label">Prep Time</label>
+                    <select th:field="*{prepTime}" id="prepTime">
+                        <option value=""></option>
+                        <option value="10">10 min</option>
+                        <option value="20">20 min</option>
+                        <option value="30">30 min</option>
+                        <option value="45">45 min</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('prepTime')}" th:errors="*{prepTime}" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="prepInstructions" class="col-form-label">Prep Instructions</label>
+                    <input type="text" th:field="*{prepInstructions}" class="form-control" id="prepInstructions" placeholder="Prep Instructions">
+                    <span th:if="${#fields.hasErrors('prepInstructions')}" th:errors="*{prepInstructions}" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="difficultyLevel" class="col-form-label">Difficulty Level</label>
+                    <select th:field="*{difficultyLevel}" id="difficultyLevel">
+                        <option value=""></option>
+                        <option value="easy">Easy</option>
+                        <option value="middle">Middle</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('difficultyLevel')}" th:errors="*{difficultyLevel}" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-6" id="dishTypeField" >
+                    <select class="form-control" id="dishType" name="dishType" th:field="*{dishType}" th:if="*{dishType}">
+                        <option th:value="*{dishType}" th:text="*{dishType}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mt-5">
+                    <input type="submit" class="btn green-button" value="Next">
+                </div>
+            </div>
+        </form>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script th:src="@{/js/scriptsForHtml/dropDownRecipe.js}"></script>
+
+
+    </div>
+</div>
+<!--end add recipe form-->
+
+<div th:replace="fragments/endPage.html :: endPage"></div>

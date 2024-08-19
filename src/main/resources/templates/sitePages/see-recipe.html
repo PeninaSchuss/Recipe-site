@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+<div class="receipe-post-area section-padding-80">
+
+    <!-- Receipe Content Area -->
+    <div class="receipe-content-area">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="receipe-headline my-5">
+                        <span th:text="${#temporals.format(recipe.creationDate, 'dd MMMM yyyy')}"></span>
+                        <h2 th:text="${recipe.recipeName}"></h2>
+                        <div class="receipe-duration">
+                            <span>Preparation Time: </span>
+                            <h6 th:text="${recipe.prepTime} + ' min'"></h6>
+                            <span>Dish Type: </span>
+                            <h6 th:text="${recipe.dishType}"></h6>
+                            <span>Difficulty Level: </span>
+                            <h6 th:text="${recipe.difficultyLevel}"></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <h2>Instructions: </h2>
+                    <p th:text="${recipe.prepInstructions}"></p>
+                </div>
+
+                <!-- Ingredients -->
+                <div class="col-12 col-lg-4">
+                    <div class="ingredients">
+                        <h4>Ingredients</h4>
+                        <ul>
+                            <!-- Custom Checkbox -->
+                            <li th:each="ingredient : ${recipe.ingredients}">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" th:id="'customCheck' + ${ingredient.id}" th:value="${ingredient}">
+                                    <label class="custom-control-label" th:for="'customCheck' + ${ingredient.id}" th:text="${ingredient.quantity +' '+ ingredient.ingredientName}"></label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/endPage.html :: endPage"></div>

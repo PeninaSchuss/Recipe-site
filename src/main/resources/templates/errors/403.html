@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header.html :: header"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">You are not logged in properly!</h4>
+                <p>You do not have permission to access this page.</p>
+                <hr>
+                <p class="mb-0">Click <a th:href="@{/index}">here </a>back to home page.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/endPage.html :: endPage"></div>

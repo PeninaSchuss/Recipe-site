@@ -1,0 +1,167 @@
+<div th:fragment="header">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!-- Title -->
+        <title>Delicious</title>
+
+        <!-- Favicon -->
+        <link rel="icon" th:href="@{/img/core-img/favicon.ico}">
+
+        <!-- Core Stylesheet -->
+        <link rel="stylesheet" th:href="@{/style.css}">
+
+    </head>
+
+    <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <i class="circle-preloader"></i>
+        <img th:src="@{/img/core-img/salad.png}" alt="">
+    </div>
+<!-- Search Wrapper -->
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form id="search-form" action="#" th:action="@{/search}" method="post">
+                        <button type="submit" class="submit-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <div class="form-group">
+                            <label for="prepTime">Preparation Time:</label>
+                            <select name="prepTime" id="prepTime">
+                                <option value=""></option>
+                                <option value="10">10 min</option>
+                                <option value="20">20 min</option>
+                                <option value="30">30 min</option>
+                                <option value="45">45 min</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dishType" class="col-form-label">Dish Type:</label>
+                            <select class="form-control" id="dishType" name="dishType">
+                                <option value=""></option>
+                                <option th:each="type : ${dishTypes}" th:value="${type.recipeType}" th:text="${type.recipeType}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recipeName">Recipe Name:</label>
+                            <input type="text" name="recipeName" id="recipeName" placeholder="Enter recipe name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ingredient">Ingredient:</label>
+                            <input type="text" name="ingredient" id="ingredient" placeholder="Enter ingredient">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="difficultyLevel">Difficulty Level:</label>
+                            <select name="difficultyLevel" id="difficultyLevel">
+                                <option value=""></option>
+                                <option value="easy">Easy</option>
+                                <option value="middle">Middle</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- ##### Header Area Start ##### -->
+<header class="header-area">
+    <!-- Navbar Area -->
+    <div class="delicious-main-menu">
+        <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+                <!-- Menu -->
+                <nav class="classy-navbar justify-content-between" id="deliciousNav">
+
+                    <!-- Logo -->
+                    <a class="nav-brand" th:href="@{/index}">
+                        <img th:src="@{/img/core-img/logo.png}" alt="">
+                    </a>
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <!-- Menu -->
+                    <div class="classy-menu">
+
+                        <!-- close btn -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+                        <!-- Nav Start -->
+                        <div class="classynav">
+                            <ul>
+                                <li>
+                                    <a th:href="@{/index}">HOME</a>
+                                </li>
+
+                                <li th:each="category : ${recipeCategory}">
+                                    <a>
+                                        <span th:text="${category.categoryName}"></span>
+                                    </a>
+                                    <ul class="dropdown">
+                                        <li th:each="recipeType : ${category.recipeTypes}">
+                                            <a th:href="@{'/recipe/' + ${recipeType.recipeType}}">
+                                                <span th:text="${recipeType.recipeType}"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a th:href="@{/admin/add-recipe}">Add Recipe</a>
+                                </li>
+                                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a>
+                                        <span th:text="'Handle' + ' ' + 'Bar'"></span>
+                                    </a>
+                                    <ul class="dropdown">
+                                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                            <a th:href="@{/admin/addToBar}">Add to Bar</a>
+                                        </li>
+                                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                            <a th:href="@{/admin/deleteFromBar}">Delete From Bar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li sec:authorize="hasRole('ROLE_USER')">
+                                    <a th:href="@{/user/contact}">Contact</a>
+                                </li>
+                            </ul>
+
+                            <!-- Newsletter Form -->
+                            <div class="search-btn">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </div>
+
+                        </div>
+                        <script th:src="@{/js/scriptsForHtml/forNavBar.js}"></script>
+
+                        <!-- Nav End -->
+                    </div>
+                    <div th:if="${#authorization.expression('isAuthenticated()')}">
+                        <a th:href="@{/logout}" class="btn green-button">Logout</a>
+                    </div>
+                    <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                        <a th:href="@{/login}" class="btn green-button" >Login</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+</div>
